@@ -1,7 +1,3 @@
-Based on the code and files provided, here is a comprehensive README for your project.
-
----
-
 # Forest Fire Detection using VAE-WGAN & Latent Space Classification
 
 ## 📌 Project Overview
@@ -14,14 +10,14 @@ The core model combines generative and adversarial networks to ensure high-quali
 
 ### 1. VAE-WGAN (Main Model)
 
-* **Encoder:** Compresses 64x64 RGB images into a 128-dimensional latent vector (). Uses Convolutional layers with Batch Normalization and LeakyReLU.
-* **Decoder (Generator):** Reconstructs images from the latent vector. Uses Transposed Convolutions with Tanh activation (output range ).
+* **Encoder:** Compresses 64x64 RGB images into a 128-dimensional latent vector $(z)$. Uses Convolutional layers with Batch Normalization and LeakyReLU.
+* **Decoder (Generator):** Reconstructs images from the latent vector. Uses Transposed Convolutions with Tanh activation (output range [-1, 1]).
 * **Discriminator (Critic):** Distinguishes between real input images and VAE reconstructions. Uses Instance Normalization for WGAN stability.
 * **Loss Function:** Combines Reconstruction Loss (MSE), KL Divergence, and Adversarial Loss (Wasserstein distance with Gradient Penalty).
 
 ### 2. Latent Classifier
 
-* **SVM (Support Vector Machine):** A secondary classifier trained on the latent vectors () extracted by the VAE Encoder.
+* **SVM (Support Vector Machine):** A secondary classifier trained on the latent vectors $(z)$ extracted by the VAE Encoder.
 * **Kernel:** RBF (Radial Basis Function).
 * **Purpose:** Explicitly classifies images as "Normal" or "Fire" based on the compressed feature representation.
 
@@ -37,7 +33,7 @@ modis_dataset_brazil/
 ```
 
 * **Input Size:** Images are resized to **64x64**.
-* **Normalization:** Pixel values are normalized to .
+* **Normalization:** Pixel values are normalized to [-1, 1].
 
 ## 🛠️ Installation & Requirements
 
@@ -62,7 +58,7 @@ Train the unsupervised model on normal data to learn the baseline distribution.
 Train the SVM classifier using features extracted from the frozen VAE-WGAN.
 
 * **File:** `train_latent_classifier_svm.ipynb`
-* **Process:** Extracts latent vectors () from the test set and trains an SVM.
+* **Process:** Extracts latent vectors $(z)$ from the test set and trains an SVM.
 * **Output:** Saves the classifier as `final_svm_model.pkl` and plots the confusion matrix.
 
 ### 3. Evaluation & Demo
